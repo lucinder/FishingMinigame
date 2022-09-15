@@ -33,7 +33,6 @@ l_w = []
 l_c = []
 l_r = []
 l_f = []
-s = []
 for fish in fishdb:
    lists = {
       "polar" : { "Common" : c_p, "Uncommon" : u_p, "Rare" : r_p, "Legendary" : l_p },
@@ -41,8 +40,7 @@ for fish in fishdb:
       "west" : { "Common" : c_w, "Uncommon" : u_w, "Rare" : r_w, "Legendary" : l_w },
       "central" : { "Common" : c_c, "Uncommon" : u_c, "Rare" : r_c, "Legendary" : l_c },
       "reef" : { "Common" : c_r, "Uncommon" : u_r, "Rare" : r_r, "Legendary" : l_r },
-      "freshwater" : { "Common" : c_f, "Uncommon" : u_f, "Rare" : r_f, "Legendary" : l_f },
-      "startarg" : { "Common" : s, "Uncommon" : s, "Rare" : s, "Legendary": s }
+      "freshwater" : { "Common" : c_f, "Uncommon" : u_f, "Rare" : r_f, "Legendary" : l_f }
    }
    for biome in fish["biomes"]:
       lists[biome][fish["rarity"]].append(fish)
@@ -69,7 +67,7 @@ def rarityToIndex(rarity):
       return 2
    return 3
 def getfish(area, fishrarity, fishno):
-   if(not(area in ["polar","west","east","central","freshwater","reef","startarg"])):
+   if(not(area in ["polar","west","east","central","freshwater","reef"])):
       return "Error: invalid location argument."
    fishlist = {
        'west': (l_w, r_w, u_w, c_w),
@@ -77,8 +75,7 @@ def getfish(area, fishrarity, fishno):
        'polar': (l_p, r_p, u_p, c_p),
        'central': (l_c, r_c, u_c, c_c),
        'reef': (l_r, r_r, u_r, c_r),
-       'freshwater': (l_f, r_f, u_f, c_f),
-       'startarg': (s, s, s, s)
+       'freshwater': (l_f, r_f, u_f, c_f)
    }[area][rarityToIndex(fishrarity)]
    return fishlist[int(len(fishlist)*fishno)]
 def printfishdetails(fish):
@@ -86,9 +83,6 @@ def printfishdetails(fish):
       return fish
    out = ""
    out += "You caught a **" + fish["name"] + "**!\n"
-   if(fish["name"] == "ERROR: FISH NOT FOUND"):
-       out += "*Look outside the box.*"
-       return out
    fishwgt = getWeight(fish,r3)
    fishlen = getLength(fish,r3)
    if(fishwgt >= 1000):
